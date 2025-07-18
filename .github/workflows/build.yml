@@ -1,0 +1,17 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: |
+          ./mach bootstrap
+          ./mach build
