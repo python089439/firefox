@@ -2,11 +2,25 @@ name: Build
 
 on:
   push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+    - cron: '0 6 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 18 * * *'
+
+concurrency:
+  group: global
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 300
+    strategy:
+      matrix:
+        instance: ["windows-amd", "windows-arm", "linux-amd", "linux-arm", "macos"]
+        
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
